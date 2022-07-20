@@ -7,20 +7,24 @@ import random
 @cocotb.test()
 async def test_mux(dut):
     """Test for mux2"""
-    
-    # for i in range(0,31):
-    #     inp[i]=random.randint(0, 3)
 
     input_0=3
-    # input_0=2'b00
-
-    dut.inp2.value=input_0
-    selection=2
+    dut.inp10.value=input_0
+    selection=10
     dut.sel.value=selection
     await Timer(2, units='ns')
     dut._log.info(f'Mux_sel={selection} Test_input={input_0} Output_Mux={int(dut.out.value)}')
-    assert dut.out.value == input_0, "Multiplexer test failed with: {select} = {output}".format(
+    assert dut.out.value == (input_0), "Multiplexer test failed with: {select} = {output}".format(
             select=dut.sel.value,  output=dut.out.value)
+    
 
-
-    # cocotb.log.info('##### CTB: Develop your test here ########')
+    input_1=2
+    dut.inp12.value=input_1
+    selection=12
+    dut.sel.value=selection
+    await Timer(2, units='ns')
+    dut._log.info(f'Mux_sel={selection} Test_input={input_1} Output_Mux={int(dut.out.value)}')
+    assert dut.out.value == (input_1), "Multiplexer test failed with: {select} = {output}".format(
+            select=dut.sel.value,  output=dut.out.value)
+    
+    
