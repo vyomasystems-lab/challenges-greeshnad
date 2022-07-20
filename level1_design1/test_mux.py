@@ -18,7 +18,7 @@ async def test_mux(dut):
     selection=12
     dut.sel.value=selection
     await Timer(2, units='ns')
-    dut._log.info(f'sel={selection} model={input_0} DUT={int(dut.out.value)}')
+    dut._log.info(f'Mux_sel={selection} Test_input={input_0} Output_Mux={int(dut.out.value)}')
     assert dut.out.value == input_0, "Randomised test failed with: {A} = {SUM}".format(
             A=dut.sel.value,  SUM=dut.out.value)
 
