@@ -19,8 +19,8 @@ async def test_mux(dut):
     dut.sel.value=selection
     await Timer(2, units='ns')
     dut._log.info(f'Mux_sel={selection} Test_input={input_0} Output_Mux={int(dut.out.value)}')
-    assert dut.out.value == input_0, "Randomised test failed with: {A} = {SUM}".format(
-            A=dut.sel.value,  SUM=dut.out.value)
+    assert dut.out.value == input_0, "Multiplexer test failed with: {select} = {output}".format(
+            select=dut.sel.value,  output=dut.out.value)
 
 
     # cocotb.log.info('##### CTB: Develop your test here ########')
