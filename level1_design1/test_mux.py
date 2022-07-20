@@ -14,8 +14,8 @@ async def test_mux(dut):
     input_0=3
     # input_0=2'b00
 
-    dut.inp11.value=input_0
-    selection=0
+    dut.inp12.value=input_0
+    selection=12
     dut.sel.value=selection
     await Timer(2, units='ns')
     dut._log.info(f'sel={selection} model={input_0} DUT={int(dut.out.value)}')
