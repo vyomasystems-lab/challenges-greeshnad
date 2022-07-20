@@ -8,12 +8,13 @@ import random
 async def test_mux(dut):
     """Test for mux2"""
     
-    for i in range(0,31):
-        inp[i]=random.randint(0, 3)
-    input_0=inp[0]
-    # input_0=3
+    # for i in range(0,31):
+    #     inp[i]=random.randint(0, 3)
 
-    dut.inp0.value=input_0
+    input_0=3
+    # input_0=2'b00
+
+    dut.inp11.value=input_0
     selection=0
     dut.sel.value=selection
     await Timer(2, units='ns')
@@ -22,4 +23,4 @@ async def test_mux(dut):
             A=dut.sel.value,  SUM=dut.out.value)
 
 
-    cocotb.log.info('##### CTB: Develop your test here ########')
+    # cocotb.log.info('##### CTB: Develop your test here ########')
