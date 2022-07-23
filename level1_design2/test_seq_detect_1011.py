@@ -56,6 +56,5 @@ async def test_seq_bug1(dut):
 
     await Timer(10, units='us')
     dut._log.info('current_state_bit1=%s',dut.current_state.value)
-    assert dut.seq_seen.value == 1, "Multiplexer test failed with: {select} = {output}".format(
-            select=dut.inp_bit.value,  output=dut.seq_seen.value)
+    assert dut.seq_seen.value == 1, "Sequence_detector failed with sequence 101011")
     
