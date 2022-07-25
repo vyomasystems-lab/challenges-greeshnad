@@ -35,24 +35,41 @@ def run_test(dut):
     ######### CTB : Modify the test to expose the bug #############
     # input transaction
     mav_putvalue_src1 = 0x5
-    mav_putvalue_src2 = 0x0
+    mav_putvalue_src2 = 0xffffffff
     mav_putvalue_src3 = 0x0
-    mav_putvalue_instr = 0x101010B3
-
+    # mav_putvalue_instr = 0x101010B3
+    mav_putvalue_instr = 0x201010B3
     # expected output from the model
     expected_mav_putvalue = bitmanip(mav_putvalue_instr, mav_putvalue_src1, mav_putvalue_src2, mav_putvalue_src3)
 
     # driving the input transaction
+    # mav_putvalue_instr[6:0] == 7'b0110011 
+	# mav_putvalue_instr[6:0] == 7'b0010011
     dut.mav_putvalue_src1.value = mav_putvalue_src1
     dut.mav_putvalue_src2.value = mav_putvalue_src2
     dut.mav_putvalue_src3.value = mav_putvalue_src3
     dut.EN_mav_putvalue.value = 1
-    dut.mav_putvalue_instr.value = mav_putvalue_instr
-  
+    opcode_array=[0x00000033,0x00000013]
+    for opcode in opcode_array:
+        instruction=opcode
+        for func3 in range(0,8):
+            instruction1=(opcode>>16)| func3
+            # print("func3_loop",instruction1)
+            instruction=(instruction1<<16)|opcode
+            # print(instruction)
+            for func7 in range(0,128):
+                instruction1=(instruction>>25)| func7
+                # print("func7_loop",instruction1)
+                instruction_final=instruction1<<25|instruction
+                # instruction_hex=hex(instruction_final)
+                dut.mav_putvalue_instr.value = instruction_final
+    
     yield Timer(1) 
 
     # obtaining the output
     dut_output = dut.mav_putvalue.value
+    valid_bit= dut.RDY_mav_putvalue.value
+    print("Valid bit:",valid_bit)
 
     cocotb.log.info(f'DUT OUTPUT={hex(dut_output)}')
     cocotb.log.info(f'EXPECTED OUTPUT={hex(expected_mav_putvalue)}')
