@@ -31,29 +31,28 @@ def run_test(dut):
     dut.RST_N.value <= 0
     yield Timer(10) 
     dut.RST_N.value <= 1
-    i=0
+    
     ######### CTB : Modify the test to expose the bug #############
+    i=0
     # input transaction
-    mav_putvalue_src1 = 0xffff
-    mav_putvalue_src2 = 0x5
+    mav_putvalue_src1 = 0xffffffff
+    mav_putvalue_src2 = 0xffffffff
     mav_putvalue_src3 = 0x0
-    # print('type of 0x',type(mav_putvalue_src1))
+    
     # mav_putvalue_instr = 0x101010B3
     # mav_putvalue_instr = 0x201010B3
     # mav_putvalue_instr = 537923635
-    # mav_putvalue_instr=51
-    # print("Outside loop",type(mav_putvalue_instr))
-    # expected output from the model
+    
+    
     # expected_mav_putvalue = bitmanip(mav_putvalue_instr, mav_putvalue_src1, mav_putvalue_src2, mav_putvalue_src3)
-    # print("Outside loop expected model value",expected_mav_putvalue)
 
+    errors=[]
     # driving the input transaction
     dut.mav_putvalue_src1.value = mav_putvalue_src1
     dut.mav_putvalue_src2.value = mav_putvalue_src2
     dut.mav_putvalue_src3.value = mav_putvalue_src3
     dut.EN_mav_putvalue.value = 1
     opcode_array=[0x00000033,0x00000013]
-    
 
     for opcode_1 in opcode_array:
         instruction=opcode_1
@@ -88,20 +87,22 @@ def run_test(dut):
                     # print(instruction_hex)
                     # await Timer(2,"ns")
                     yield Timer(1)
-                    i=i+1
+                    # i=i+1
                     # print(i)
                     # print(instruction_hex) 
                     dut_output1 = dut.mav_putvalue.value
                     # print("Buggy",dut_output1)
-                    cocotb.log.info(f'DUT OUTPUT={hex(dut_output1)}')
-                    cocotb.log.info(f'EXPECTED OUTPUT={hex(expected_mav_putvalue1)}')
+                    # cocotb.log.info(f'DUT OUTPUT={hex(dut_output1)}')
+                    # cocotb.log.info(f'EXPECTED OUTPUT={hex(expected_mav_putvalue1)}')
 
                     # comparison
                     error_message = f'Value mismatch DUT = {hex(dut_output1)} does not match MODEL = {hex(expected_mav_putvalue1)} at opcode={hex(instruction_final)}'
                     try:
                         assert dut_output1 == expected_mav_putvalue1, error_message
                     except AssertionError as e:
-                        cocotb.log.info(f'Value mismatch DUT = {hex(dut_output1)} does not match MODEL = {hex(expected_mav_putvalue1)} at opcode={hex(instruction_final)}')
+                        i=i+1
+                        errors.append(hex(instruction_final))
+                        # cocotb.log.info(f'Value mismatch DUT = {hex(dut_output1)} does not match MODEL = {hex(expected_mav_putvalue1)} at opcode={hex(instruction_final)}')
 
     # dut.mav_putvalue_instr.value = mav_putvalue_instr
     # yield Timer(1) 
@@ -114,6 +115,23 @@ def run_test(dut):
     # cocotb.log.info(f'DUT OUTPUT={hex(dut_output)}')
     # cocotb.log.info(f'EXPECTED OUTPUT={hex(expected_mav_putvalue)}')
     print('i value',i)
-    # # comparison
-    # error_message = f'Value mismatch DUT = {hex(dut_output)} does not match MODEL = {hex(expected_mav_putvalue)}'
-    # assert dut_output == expected_mav_putvalue, error_message
+    # print(errors)
+    errors_int = [int(numeric_string,16) for numeric_string in errors]
+    for instruc in errors_int:
+        expected_mav_putvalue1 = bitmanip(instruc, mav_putvalue_src1, mav_putvalue_src2, mav_putvalue_src3)
+        
+        dut.mav_putvalue_instr.value = instruc
+        yield Timer(1)
+
+        dut_output1 = dut.mav_putvalue.value
+        
+
+        # comparison
+        error_message = f'Value mismatch DUT = {hex(dut_output1)} does not match MODEL = {hex(expected_mav_putvalue1)} at opcode={hex(instruc)}'
+        try:
+            assert dut_output1 == expected_mav_putvalue1, error_message
+        except AssertionError as e:
+            # i=i+1
+            # errors.append(hex(instruction_final))
+            cocotb.log.info(f'Value mismatch DUT = {hex(dut_output1)} does not match MODEL = {hex(expected_mav_putvalue1)} at opcode={hex(instruc)}')
+  
