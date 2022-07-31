@@ -15,19 +15,27 @@ from cocotb.triggers import RisingEdge, FallingEdge
 async def usr_test(dut):
     
 
-    clock1 = Clock(dut.clock, 10, units="us")  # Create a 10us period clock on port clk
+    clock1 = Clock(dut.clk, 10, units="us")  # Create a 10us period clock on port clk
     cocotb.start_soon(clock1.start())        # Start the clock
 
-    # dut.clock.value =0 
-    dut.MODE.value = 0
-    dut.DATAIN.value = 1
-    dut.reset.value = 1; 
-    await RisingEdge(dut.clock)
+    await Timer(10,'us')
+    dut.clear.value = 0
+    dut.S.value = 3
+    dut.I.value = 3
+    
+    await Timer(11,'us')
+    print("Output is",dut.O.value)
 
-    dut.reset.value = 0; 
-    await RisingEdge(dut.clock)
+    
+    dut.S.value = 4
+    await Timer(11,'us')
+    print("Output1 is",dut.O.value)
 
-    dut_output1=dut.DATAOUT.value
-    print("Output is",dut_output1)
+
+    dut.S.value = 2
+    await Timer(15,'us')
+
+    dut_output1=dut.O.value
+    print("Output_final is",dut.O.value)
     error_message=f'Failing test'
-    assert dut_output1 == 1, error_message
+    assert dut_output1 == 6, error_message

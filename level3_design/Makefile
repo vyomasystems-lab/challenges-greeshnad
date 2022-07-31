@@ -6,8 +6,8 @@ PWD=$(shell pwd)
 
 VERILOG_SOURCES = $(PWD)/usr.v            # provide your design path
 
-TOPLEVEL :=     universalShiftRegister    # design file
-MODULE   :=     usr_test		# test file
+TOPLEVEL :=Universal_shift_reg    # design file
+MODULE   :=usr_test		# test file
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 
