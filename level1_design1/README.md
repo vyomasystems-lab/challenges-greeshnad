@@ -48,12 +48,20 @@ The screenshot below shows the bugs fixed
 ![](https://github.com/vyomasystems-lab/challenges-greeshnad/blob/master/level1_design1/mux_ss/mux_fix.PNG)
 
 ## Design Fix
-Updating the design and re-running the test makes the test pass.
+Updating the design as shown in previous section and re-running the test makes the test pass.
 
-![](https://i.imgur.com/5XbL1ZH.png)
+![](https://github.com/vyomasystems-lab/challenges-greeshnad/blob/master/level1_design1/mux_ss/mux_pass.PNG)
 
-The updated design is checked in as adder_fix.v
+The expected value(input_value) and DUT output (Mux_output value) are the same and the bugs are fixed
+
+The updated design is checked in as mux_fix.v in fix_design folder
 
 ## Verification Strategy
 
+- The strategy to use all possible selection value tests all the scenarios
+- Since assertion error stops simulation, use try and except block to test all 31 scenarios and print the failed cases
+- Since in mux.v the default value in case block is ``2'b00`` , generate random inputs for inp0 to inp30 from 1 to 3. This ensures that all fail cases are asserted.
+eg- For sel=30 if random input value for inp30 happens to be 0 then that test will show a pass case wrongly.
+
 ## Is the verification complete ?
+Yes, all test scenarios are verified and all bugs are identified. The bugs are fixed as shown in above sections.
