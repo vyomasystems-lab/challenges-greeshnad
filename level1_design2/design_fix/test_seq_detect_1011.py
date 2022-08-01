@@ -53,7 +53,7 @@ async def test_seq_bug1(dut):
     for inp in input_array:
         
         dut.inp_bit.value=inp
-        dut._log.info('current_state=%s',dut.current_state.value)
+        dut._log.info('current_state=%sh',dut.current_state.value)
         await Timer(11, units='us')
         dut._log.info('final_status=%s',dut.current_state.value)
         i=i+1
