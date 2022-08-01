@@ -64,7 +64,7 @@ The updated design is checked in as usr_fix.v in fix_design folder
 ## Verification Strategy
 
 - The strategy to use all possible selection value tests all the scenarios
-- Since assertion error stops simulation, use try and except block to test all 31 scenarios and print the failed cases
+- Since assertion error stops simulation, use try and except block to test all scenarios and print the failed cases
 - Test clear=1 case too
 
 ## Is the verification complete ?
