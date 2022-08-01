@@ -10,8 +10,8 @@ wire [3 : 0] D_temp;
 
 Mux_4_to_1 inst1(D_temp[0] , S , O[0] , left , O[1] , I[0] );
 Mux_4_to_1 inst2(D_temp[1] , S , O[1] , O[0] , O[2] , I[1] );
-Mux_4_to_1 inst3(D_temp[2] , S , O[2] , O[1] , O[3] , I[3] );
-Mux_4_to_1 inst4(D_temp[3] , S , O[3] , O[2] , 1'b0 ,I[3] );
+Mux_4_to_1 inst3(D_temp[2] , S , O[2] , O[1] , O[3] , I[2] );
+Mux_4_to_1 inst4(D_temp[3] , S , O[3] , O[2] , right , I[3] );
 
 D_FlipFlop D_inst1(O[0] , D_temp[0] , clk , clear);
 D_FlipFlop D_inst2(O[1] , D_temp[1] , clk , clear);
