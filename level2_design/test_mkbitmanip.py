@@ -35,23 +35,17 @@ def run_test(dut):
     ######### CTB : Modify the test to expose the bug #############
     i=0
     # input transaction
-    mav_putvalue_src1 = 0xffffffff
-    mav_putvalue_src2 = 0xffffffff
-    mav_putvalue_src3 = 0x0
+    mav_putvalue_src1 = 0x76127f56
+    mav_putvalue_src2 = 0x2341073
+    mav_putvalue_src3 = 0xff62537
     
-    # mav_putvalue_instr = 0x101010B3
-    # mav_putvalue_instr = 0x201010B3
-    # mav_putvalue_instr = 537923635
-    
-    
-    # expected_mav_putvalue = bitmanip(mav_putvalue_instr, mav_putvalue_src1, mav_putvalue_src2, mav_putvalue_src3)
-
     errors=[]
     # driving the input transaction
     dut.mav_putvalue_src1.value = mav_putvalue_src1
     dut.mav_putvalue_src2.value = mav_putvalue_src2
     dut.mav_putvalue_src3.value = mav_putvalue_src3
     dut.EN_mav_putvalue.value = 1
+    #these two values below cover lsb 7 bits opcode combination of all possible instructions in model.py file
     opcode_array=[0x00000033,0x00000013]
 
     for opcode_1 in opcode_array:
@@ -70,14 +64,13 @@ def run_test(dut):
                     expected_mav_putvalue1 = bitmanip(instruction_final, mav_putvalue_src1, mav_putvalue_src2, mav_putvalue_src3)
                     
                     if expected_mav_putvalue1=='INVALID':
-                        continue 
+                        continue  #if instruction doesnt exist in model.py continue to next iteration
                     
                     dut.mav_putvalue_instr.value = instruction_final
                     
-                    
                     yield Timer(1)
                      
-                    dut_output1 = dut.mav_putvalue.value
+                    dut_output1 = dut.mav_putvalue.value #dut output
             
                     # comparison
                     error_message = f'Value mismatch DUT = {hex(dut_output1)} does not match MODEL = {hex(expected_mav_putvalue1)} at instruction={hex(instruction_final)}'
@@ -88,7 +81,7 @@ def run_test(dut):
                         errors.append(hex(instruction_final))#stores all exception errors i.e model value is not equal to DUT value
                        
 
-    print('i value',i)
+    print('No of exception erros',i)
     # convert all errors into hex int value
     errors_int = [int(numeric_string,16) for numeric_string in errors]
     #run all the error instructions and check which operation it corresponds to
@@ -100,7 +93,6 @@ def run_test(dut):
 
         dut_output1 = dut.mav_putvalue.value
         
-
         # comparison
         error_message = f'Value mismatch DUT = {hex(dut_output1)} does not match MODEL = {hex(expected_mav_putvalue1)} at opcode={hex(instruc)}'
         try:
