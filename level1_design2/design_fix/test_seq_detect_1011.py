@@ -39,24 +39,30 @@ async def test_seq_bug2(dut):
     await Timer(10, units='ns')
     dut.inp_bit.value=0
     dut._log.info('current_state=%s',dut.current_state.value)
-    # assert dut.seq_seen.value == 1, "Sequence_detector failed with sequence 101011"
+    # # assert dut.seq_seen.value == 1, "Sequence_detector failed with sequence 101011"
 
     dut.reset.value = 0
-    await FallingEdge(dut.clk)
+    await RisingEdge(dut.clk)
     dut._log.info('current_state_rst_deasserted=%s',dut.current_state.value)
 
     #test_vector
-    input_array=[1,0,1,1,0,1,1]
+    input_array=[1,0,1,0,1,1]
     le=len(input_array)
     i=0
-    await Timer(10, units='us')
+    j=0
+    # await RisingEdge(dut.clk)
     for inp in input_array:
         
         dut.inp_bit.value=inp
         dut._log.info('current_state=%s',dut.current_state.value)
-        await Timer(10, units='us')
+        await RisingEdge(dut.clk)
+        await Timer(1, units='ns')
         dut._log.info('final_state=%s',dut.current_state.value)
         i=i+1
+        if dut.seq_seen.value == 1:
+            j=j+1
         if(i==le):
+            print("The number of 1011 sequence overlap with non-sequence detected=",j)
             assert dut.seq_seen.value == 1, "Sequence_detector failed" 
+    
     
