@@ -99,6 +99,8 @@ From the above section, it can be concluded that if the AND operation in buggy D
 
 - The strategy to test every single instruction in model.py file was achieved through python loop in test file
 - Different input values including corner cases like all zeroes and all ones were tested.
+- Try and except block are used to store all the errorsm at once instead of stopping simulation.
+- If the instruction is not valid in model.py file then the iteration continues using continue statement in python
 
 ## Is the verification complete ?
 Yes the verification is complete
