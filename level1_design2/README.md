@@ -101,7 +101,8 @@ The fixed code is checked in design_fix folder under seq_detect_1011_fix.v name.
 
 ## Verification Strategy
 
-- The goal is to check check overlapping non-sequence. So test different test cases
+- The goal is to check check overlapping non-sequence. So test different scenarios are tested as above.
+- Reset=1 scenario is tested and verified that current_state is IDLE.
 - Scenario 3 bug presented and fixed above is done assuming the original bug-free DUT is supposed to detect two valid sequences with no overlap between them. If that scenario is not needed then, SEQ_1011 state will always have next state as IDLE.
 - Two Valid sequences with overlap between them will give a failed test as described in LMS video. eg- 1011011 input_sequence will fail even in seq_detect_1011_fix.v 
 ## Is the verification complete ?
