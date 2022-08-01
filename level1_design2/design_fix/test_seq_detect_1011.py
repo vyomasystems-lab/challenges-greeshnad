@@ -46,7 +46,7 @@ async def test_seq_bug1(dut):
     dut._log.info('current_state_rst_deasserted=%s',dut.current_state.value)
 
     #test_vector
-    input_array=[1,0,1,1,0,1,1]
+    input_array=[1,0,1,1,1,0,1,1]
     le=len(input_array)
     i=0
     await Timer(10, units='us')
