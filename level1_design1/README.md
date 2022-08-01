@@ -44,7 +44,7 @@ Based on the above test input and analysing the design, we see the following bug
 ```
 For the MUX design, the logic should be ``5'b01100: out = inp12;`` instead of ``5'b01101: out = inp12;`` as in the design code.
 For **sel=30** add ``5'b11110: out = inp30`` line as the last test case. 
-The screenshot below shows the bugs fixed
+The screenshot below shows the buggy code and code with bug fixed
 ![](https://github.com/vyomasystems-lab/challenges-greeshnad/blob/master/level1_design1/mux_ss/mux_fix.PNG)
 
 ## Design Fix
