@@ -44,8 +44,8 @@ async def test_mux(dut):
         dut.inp30.value=input_val
         await Timer(2, units='ns')
         dut._log.info(f'Mux_sel={selection} Test_input={input_val} Output_Mux={int(dut.out.value)}')
-        try:
-            assert dut.out.value == input_val, f"Multiplexer test failed with: {selection}" 
-        except AssertionError as e:
-            cocotb.log.info(f'The MUX operation failed at selection value {selection}')
-            continue
+        # try:
+        assert dut.out.value == input_val, f"Multiplexer test failed with: {selection}" 
+        # except AssertionError as e:
+            # cocotb.log.info(f'The MUX operation failed at selection value {selection}')
+            # continue
