@@ -54,8 +54,9 @@ async def test_seq_bug1(dut):
         
         dut.inp_bit.value=inp
         dut._log.info('current_state=%s',dut.current_state.value)
-        await Timer(11, units='us')
-        dut._log.info('final_status=%s',dut.current_state.value)
+        await Timer(10, units='us')
+        
+        dut._log.info('final_state=%s',dut.current_state.value)
         i=i+1
         if(i==le):
             assert dut.seq_seen.value == 1, "Sequence_detector failed" 

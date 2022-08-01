@@ -12,7 +12,7 @@ from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge
 
 @cocotb.test()
-async def test_seq_bug1(dut):
+async def test_seq_bug2(dut):
     """Test for seq detection """
 
     clock = Clock(dut.clk, 10, units="us")  # Create a 10us period clock on port clk
@@ -46,49 +46,17 @@ async def test_seq_bug1(dut):
     dut._log.info('current_state_rst_deasserted=%s',dut.current_state.value)
 
     #test_vector
-    input_array=[1,0,1,1,1,0,1,1]
+    input_array=[1,0,1,1,0,1,1]
     le=len(input_array)
     i=0
     await Timer(10, units='us')
     for inp in input_array:
         
         dut.inp_bit.value=inp
-        dut._log.info('current_state=%sh',dut.current_state.value)
-        await Timer(11, units='us')
-        dut._log.info('final_status=%s',dut.current_state.value)
+        dut._log.info('current_state=%s',dut.current_state.value)
+        await Timer(10, units='us')
+        dut._log.info('final_state=%s',dut.current_state.value)
         i=i+1
         if(i==le):
             assert dut.seq_seen.value == 1, "Sequence_detector failed" 
-        # try:
-        #     assert dut.seq_seen.value == 1, "Sequence_detector failed"
-        # except AssertionError as e:
-
-
-    # await Timer(10, units='us')
-    # dut.inp_bit.value=0
-    # dut._log.info('current_state=%s',dut.current_state.value)
-    
-    # await Timer(10, units='us')
-    # dut.inp_bit.value=1
-    # dut._log.info('current_state=%s',dut.current_state.value)
-
-    # await Timer(10, units='us')
-    # dut.inp_bit.value=1
-    # dut._log.info('current_state=%s',dut.current_state.value)
-
-    # await Timer(10, units='us')
-    # dut.inp_bit.value=0
-    # dut._log.info('current_state=%s',dut.current_state.value)
-
-    # await Timer(10, units='us')
-    # dut.inp_bit.value=1
-    # dut._log.info('current_state=%s',dut.current_state.value)
-
-    # await Timer(10, units='us')
-    # dut.inp_bit.value=1
-    # dut._log.info('current_state=%s',dut.current_state.value)
-
-    # await Timer(10, units='us')
-    # dut._log.info('final_status=%s',dut.current_state.value)
-    # assert dut.seq_seen.value == 1, "Sequence_detector failed with sequence 1011011"
     
