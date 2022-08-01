@@ -33,7 +33,7 @@ async def usr_test(dut):
 
 
     dut.S.value = 2
-    await Timer(15,'us')
+    await Timer(11,'us')
 
     dut_output1=dut.O.value
     print("Output_final is",dut.O.value)
