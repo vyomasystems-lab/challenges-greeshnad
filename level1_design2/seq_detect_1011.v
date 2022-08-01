@@ -42,6 +42,7 @@ module seq_detect_1011_buggy(seq_seen, inp_bit, reset, clk);
           next_state = SEQ_1;
         else
           next_state = IDLE;
+          
       end
       SEQ_1:
       begin
