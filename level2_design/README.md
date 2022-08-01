@@ -64,7 +64,7 @@ The screenshot below shows different errors at different instructions is all for
 ![](https://github.com/vyomasystems-lab/challenges-greeshnad/blob/master/level2_design/bitmanip_ss/andn_errors.PNG)
 ![](https://github.com/vyomasystems-lab/challenges-greeshnad/blob/master/level2_design/bitmanip_ss/andn_fail.PNG)
 
-The **bugs** identified with the above test is all for one instruction **ANDN**.
+The **bugs** identified with the above test is all for one instruction **ANDn**.
 
 ## Design Bug
 In the DUT mkbitmanip.v file it was difficult to isolate the code where bug is. 
