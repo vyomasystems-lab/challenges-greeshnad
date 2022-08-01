@@ -60,7 +60,7 @@ The updated design is checked in as mux_fix.v in fix_design folder
 
 - The strategy to use all possible selection value tests all the scenarios
 - Since assertion error stops simulation, use try and except block to test all 31 scenarios and print the failed cases
-- Since in mux.v the default value in case block is ``2'b00`` , generate random inputs for inp0 to inp30 from 1 to 3. This ensures that all fail cases are asserted.
+- Since in mux.v the default value in case block is ``default: out=0;`` , generate random inputs for inp0 to inp30 from 1 to 3. This ensures that all fail cases are asserted.
 eg- For sel=30 if random input value for inp30 happens to be 0 then that test will show a pass case wrongly.
 
 ## Is the verification complete ?
