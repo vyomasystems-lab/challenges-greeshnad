@@ -1,4 +1,4 @@
-# Multiplexer Design Verification
+# Sequence detector 1011 Design Verification
 
 The verification environment is setup using [Vyoma's UpTickPro](https://vyomasystems.com) provided for the hackathon.
 
