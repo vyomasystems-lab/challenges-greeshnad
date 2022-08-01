@@ -49,7 +49,7 @@ for func3_1 in range(0,8):
               i=i+1
               errors.append(hex(instruction_final))#stores all exception errors i.e model value is not equal to DUT value
 ```
-The assert statement is used for comparing the DUT'S output to the expected model value.
+The assert statement is used for comparing the DUT's output to the expected model value.
 All the errors are stored without stopping simulation using try and except block
 
 ## Test Scenario 
@@ -60,8 +60,9 @@ dut.mav_putvalue_src3.value = 0xff62537
 dut.EN_mav_putvalue.value = 1
 ```
 Every single valid instruction is tested for above inputs using the python loop code described in previous section.
-The error is highlighted in following screenshot.
+The screenshot below shows different errors at different instructions is all for one operation i.e **ANDn**.
 ![](https://github.com/vyomasystems-lab/challenges-greeshnad/blob/master/level2_design/bitmanip_ss/andn_errors.PNG)
+![](https://github.com/vyomasystems-lab/challenges-greeshnad/blob/master/level2_design/bitmanip_ss/andn_fail.PNG)
 
 The **bugs** identified with the above test is all for one instruction **ANDN**.
 
